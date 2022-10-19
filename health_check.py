@@ -18,8 +18,7 @@ def check_memory():
     return avail_mem > 500
 
 def check_hostname():
-    data = socket.gethostbyname("localhost")
-    ip = repr(data)
+    ip = socket.gethostbyname("localhost")
     return ip
 
 sender = "automation@example.com"
@@ -29,15 +28,20 @@ body = "Please check your system and resolve the issue as soon as possible."
 
 if not check_disk_usage("/"):
     subject = "Error - Available disk space is less than 20%"
+    message = emails.generate_error_report(sender, recipient, subject, body)
+    emails.send_email(message)
     
 if not check_cpu_usage():
     subject = "Error - CPU usage is over 80%"
+    message = emails.generate_error_report(sender, recipient, subject, body)
+    emails.send_email(message)
     
 if not check_memory():
     subject = "Error - Available memory is less than 500MB"
+    message = emails.generate_error_report(sender, recipient, subject, body)
+    emails.send_email(message)
     
-if check_hostname() != "127.0.0.1":
+if not check_hostname() == "127.0.0.1":
     subject = "Error - localhost cannot be resolved to 127.0.0.1"
-    
-message = emails.generate_error_report(sender, recipient, subject, body)
-emails.send_email(message)
+    message = emails.generate_error_report(sender, recipient, subject, body)
+    emails.send_email(message)

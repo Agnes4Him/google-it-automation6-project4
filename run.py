@@ -5,8 +5,8 @@ import json
 import  socket
 import requests
 
-desc_dir = "~/supplier-data/descriptions"
-image_dir = "~/supplier-data/images"
+desc_dir = "supplier-data/descriptions/"
+image_dir = "supplier-data/images/"
 hostname = socket.gethostname()    
 ip = socket.gethostbyname(hostname)    
 url = "http://ip/fruits"
@@ -17,8 +17,7 @@ for item in os.listdir(desc_dir):
     image_path = ""
     mod_item = item.split(".")[0]
     with open(file_path) as fp:
-        f = fp.read()
-        for line in f:
+        for line in fp:
             lines_arr.append(line)
     for image in os.listdir(image_dir):
         if image.endswith(".jpeg"):
